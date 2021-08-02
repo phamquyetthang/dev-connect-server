@@ -7,12 +7,14 @@ Server:
 - Nodejs
 - Express
 - MongoDB
+- Typescript
 
 Client:
 - React Hook
 - Redux Toolkit
 - From: react hook form, yup
-- Styled components 
+- Styled components
+- Typescript
 
 ## Nhân sự
 - Phạm Quyết Thắng : dev, leader
