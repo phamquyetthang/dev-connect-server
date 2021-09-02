@@ -1,8 +1,9 @@
+import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import rootRouter from 'apis/router';
-import Logger from 'common/helpers/Logger';
+import rootRouter from './src/apis/router';
+import Logger from './src/common/helpers/Logger';
 const app = express();
 const PORT = process.env.PORT || 5000;
 app.use(express.json({ limit: '50mb' }));

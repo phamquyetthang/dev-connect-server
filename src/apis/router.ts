@@ -1,9 +1,7 @@
-// import authRouter from "./auth/router.js";
-// import postRouter from "./posts/router.js";
+import { Router } from 'express';
+import authRouter from './auth/router';
+import userRouter from './user/router';
 
-const rootRouter: never[] = [
-    // authRouter,
-    // postRouter,
-];
+const rootRouter: Router[] = [authRouter, userRouter];
 
 export default rootRouter;
