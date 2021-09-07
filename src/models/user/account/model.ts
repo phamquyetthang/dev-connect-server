@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    project_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Projects'
+    },
     position: {
       type: String,
     },

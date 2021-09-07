@@ -10,8 +10,7 @@ export const registerController = async (
   const model: IUser = req.body;
   try {
     const response = await registerService(model);
-    console.log("🚀 ~ file: register.ts ~ line 13 ~ response", response)
-    res.status(200).json(response);
+    res.status(201).json(response);
   } catch (error) {
     next(error);
   }

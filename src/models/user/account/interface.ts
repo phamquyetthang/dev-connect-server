@@ -4,7 +4,8 @@ export default interface IUser{
     last_name: string;
     email: string;
     password: string;
-    position: string;
-    permissions: string[],
+    project_id?: string;
+    position?: string;
+    permissions?: string[],
     createdAt: Date;
 }
