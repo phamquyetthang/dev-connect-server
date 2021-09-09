@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import IInfoProject from '../../../models/project/information/interface';
-import createProjectService from '../services/createProjectService';
+import { createProjectService } from '../services/postService';
 
-export default async function createProjectController(
+export async function createProjectController(
   req: Request,
   res: Response,
   next: NextFunction

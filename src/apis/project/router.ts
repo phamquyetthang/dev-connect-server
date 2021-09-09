@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import authMiddleware from '../../common/middleware/authentication';
-import createProjectController from './controllers/createProjectController';
+import { createProjectController } from './controllers/postController';
+import { getListProjectController } from './controllers/getController';
 
 const projectRouter = Router();
-const usePath = '/project';
+const projectPath = '/project';
 
-projectRouter.post(usePath, authMiddleware, createProjectController);
+projectRouter.post(projectPath, authMiddleware, createProjectController);
+projectRouter.get(projectPath, authMiddleware, getListProjectController);
 
 export default projectRouter;

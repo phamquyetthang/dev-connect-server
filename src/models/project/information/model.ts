@@ -13,9 +13,10 @@ const projectSchema = new Schema(
     },
     members: [
       {
+        _id: false,
         member_id: {
           type: Schema.Types.ObjectId,
-          ref: 'Accounts',
+          // ref: 'Accounts',
           require: true,
         },
         name: {
@@ -26,6 +27,7 @@ const projectSchema = new Schema(
           type: String,
           require: true,
         },
+        // indexedDB: true,
       },
     ],
     description: {
@@ -57,4 +59,5 @@ const projectSchema = new Schema(
   { timestamps: { createdAt: true } }
 );
 
-export default model<IInfoProject & Document>('Projects', projectSchema);
+const projectModel = model<IInfoProject & Document>('Projects', projectSchema);
+export default projectModel;

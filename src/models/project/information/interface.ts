@@ -17,7 +17,7 @@ interface IOriginator{
 interface IMember {
   member_id: string;
   name: string;
-  permission: string;
+  position: string;
 }
 
 interface IUnit {
