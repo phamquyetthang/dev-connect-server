@@ -9,7 +9,7 @@ export async function getListProjectController(
   try {
     const userId = req.user.id;
     const response = await getListProjectService(userId);
-    res.status(201).json(response);
+    res.status(200).json(response);
   } catch (error) {
     next(error);
   }

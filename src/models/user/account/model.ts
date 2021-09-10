@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
     },
     project_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Projects'
+      ref: 'Projects',
     },
     position: {
       type: String,
@@ -37,7 +37,8 @@ const userSchema = new mongoose.Schema(
   { timestamps: { createdAt: true } }
 );
 
-export default mongoose.model<IUser & mongoose.Document>(
+const userModel = mongoose.model<IUser & mongoose.Document>(
   'Accounts',
   userSchema
 );
+export default userModel;
