@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import IDoc from './interface';
 
 const { Schema } = mongoose;
 
@@ -23,6 +24,10 @@ const docRequestSchema = new Schema({
 export const docRequests = mongoose.model('DocRequests', docRequestSchema);
 
 const docSchema = new Schema({
+  title: {
+    type: String,
+    require: true,
+  },
   method: {
     type: String,
     require: true,
@@ -82,4 +87,5 @@ const docSchema = new Schema({
   },
 });
 
-export default mongoose.model('Docs', docSchema);
+const docModel = mongoose.model<IDoc & Document>('Docs', docSchema);
+export default docModel;

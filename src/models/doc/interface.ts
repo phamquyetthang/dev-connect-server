@@ -25,6 +25,7 @@ export enum METHOD_API {
 }
 export default interface IDoc {
   _id: string;
+  title: string;
   method: METHOD_API;
   endpoint: string;
   request: IRequest[];

@@ -15,3 +15,11 @@ export async function getListProjectService(userId: string) {
     .select(['name', 'description', 'originator']);
   return projects;
 }
+
+export async function getInfoProjectService(projectId: string) {
+  const project = await projectModel.findById(projectId);
+  if (!project) {
+    throw new HttpException(400, 'Dự án này không tồn tại');
+  }
+  return project;
+}
