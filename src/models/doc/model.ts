@@ -3,25 +3,20 @@ import IDoc from './interface';
 
 const { Schema } = mongoose;
 
-const docRequestSchema = new Schema({
-  field: {
+const docStatusSchema = new Schema({ // FE done, BE done
+  name: {
     type: String,
   },
-  type: {
+  code: {
+    type: Number,
+  },
+  description: {
     type: String,
   },
-  is_require: { type: Boolean },
-  root: {
-    type: Boolean,
-    default: false,
-  },
-  child: {
-    type: Schema.Types.ObjectId,
-    ref: 'DocRequests',
-  },
-});
+})
 
-export const docRequests = mongoose.model('DocRequests', docRequestSchema);
+export const docStatusModel = mongoose.model('DocStatus', docStatusSchema);
+
 
 const docSchema = new Schema({
   title: {
@@ -47,25 +42,20 @@ const docSchema = new Schema({
     type: String,
     require: true,
   },
-  request: [docRequestSchema],
-  response: [
-    {
-      type: Object,
-    },
-  ],
-  status: [
-    {
-      name: {
-        type: String,
-      },
-      code: {
-        type: Number,
-      },
-      description: {
-        type: String,
-      },
-    },
-  ],
+  requestType: {
+    type: String,
+    require: true,
+  },
+  requestBody: Object,
+  responseType: {
+    type: String,
+    require: true,
+  },
+  responseBody: Object,
+  status: [{
+    type: Schema.Types.ObjectId,
+    ref: 'DocStatus'
+  }],
   description: {
     type: String,
     require: true,

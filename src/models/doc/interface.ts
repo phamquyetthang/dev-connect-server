@@ -23,15 +23,27 @@ export enum METHOD_API {
   OPTIONS = 'OPTIONS',
   TRACE = 'TRACE',
 }
+
+export enum REQUEST_TYPE {
+  JSON = 'json',
+  FROM_DATA = 'formData',
+  X_WWW_FORM_URLENCODED = 'xWwwFormUrlencoded',
+}
+
 export default interface IDoc {
   _id: string;
   title: string;
   method: METHOD_API;
   endpoint: string;
-  request: IRequest[];
-  response: object[];
+  requestType: REQUEST_TYPE;
+  requestBody: object;
+  responseType: 'json' | 'text' | 'key_value';
+  responseBody: object;
   status: IStatus[];
   description: string;
-  members: string[];
+  members: Array<{
+    id_member: string;
+    name: string;
+  }>;
   extension: string[];
 }
