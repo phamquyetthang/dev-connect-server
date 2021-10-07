@@ -2,8 +2,9 @@ import HttpException from '../../../common/helpers/HttpException';
 import IInfoProject from '../../../models/project/information/interface';
 import userSchema from '../../../models/user/account/model';
 import projectModel from '../../../models/project/information/model';
+import { ICreateProjectReq } from '../interface';
 export async function createProjectService(
-  request: IInfoProject,
+  request: ICreateProjectReq,
   userId: string
 ) {
   const user = await userSchema.findById(userId);

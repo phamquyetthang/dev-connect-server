@@ -8,20 +8,22 @@ export async function addMemberService(email: string, projectId: string) {
     throw new HttpException(400, 'Người dùng này không tồn tại');
   }
   try {
-    const project = await projectModel.findByIdAndUpdate(projectId, {
-      $push: {
-        "member": {
-          member_id: member._id,
-          name: `${member.first_name} ${member.last_name}`,
-          position: 'test',
+    const project = await projectModel.findByIdAndUpdate(
+      projectId,
+      {
+        $push: {
+          members: {
+            member_id: member._id,
+            name: `${member.first_name} ${member.last_name}`,
+            position: 'test',
+          },
         },
       },
-    });
+      { new: true }
+    );
 
     if (project) {
-      return {
-        success: true,
-      };
+      return project.members;
     }
   } catch (error) {
     throw new HttpException(401, 'error');

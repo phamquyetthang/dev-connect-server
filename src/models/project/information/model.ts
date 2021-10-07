@@ -16,7 +16,6 @@ const projectSchema = new Schema(
         _id: false,
         member_id: {
           type: Schema.Types.ObjectId,
-          // ref: 'Accounts',
           require: true,
         },
         name: {
