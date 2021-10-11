@@ -32,6 +32,7 @@ export enum REQUEST_TYPE {
 
 export default interface IDoc {
   _id: string;
+  projectId: string;
   title: string;
   method: METHOD_API;
   endpoint: string;

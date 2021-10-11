@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { ICreateDocReq } from '../interface';
+import IDoc from '../../../models/doc/interface';
 import { createDocService } from '../services/postService';
 
 export async function createDocController(
@@ -8,9 +8,11 @@ export async function createDocController(
   next: NextFunction
 ) {
   try {
-    const request: ICreateDocReq = req.body;
-    const userId = req.user.id;
-    const response = await createDocService(request, userId);
+    const {
+      docData,
+      projectId,
+    }: { docData: IDoc; projectId: string } = req.body;
+    const response = await createDocService(docData, projectId);
     res.status(201).json(response);
   } catch (error) {
     next(error);

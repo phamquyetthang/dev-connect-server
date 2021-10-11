@@ -23,3 +23,11 @@ export async function getInfoProjectService(projectId: string) {
   }
   return project;
 }
+
+export async function getProjectMemberService(projectId: string){
+  const project = await projectModel.findById(projectId).select('members');
+  if (!project) {
+    throw new HttpException(400, 'Dự án này không tồn tại');
+  }
+  return project.members;
+}

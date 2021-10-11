@@ -19,6 +19,11 @@ export const docStatusModel = mongoose.model('DocStatus', docStatusSchema);
 
 
 const docSchema = new Schema({
+  projectId: {
+    type: Schema.Types.ObjectId,
+    require: true,
+    ref: 'Projects',
+  },
   title: {
     type: String,
     require: true,

@@ -2,14 +2,15 @@ import HttpException from '../../../common/helpers/HttpException';
 import userSchema from '../../../models/user/account/model';
 import docModel from '../../../models/doc/model';
 import projectModel from '../../../models/project/information/model';
-import { ICreateDocReq } from '../interface';
+import IDoc from '../../../models/doc/interface';
 
-export async function createDocService(request: ICreateDocReq, userId: string) {
-  const user = await userSchema.findById(userId);
+export async function createDocService(request: IDoc, projectId: string) {
+  const user = await projectModel.findById(projectId);
   if (!user) {
     throw new HttpException(400, 'Tài khoản của bạn không tồn tại');
   }
   const newDoc = new docModel({
+    projectId: projectId,
     description: request.description,
     endpoint: request.endpoint,
     method: request.method,
@@ -19,12 +20,12 @@ export async function createDocService(request: ICreateDocReq, userId: string) {
     requestBody: request.requestBody,
     responseType: request.requestType,
     responseBody: request.requestBody,
-  } as ICreateDocReq);
+  } as IDoc);
   const project = await newDoc.save();
 
-  await projectModel.findByIdAndUpdate(request.projectId, {
-    $push: { unit: { unit_id: project._id, name: project.title } },
-  });
+  // await projectModel.findByIdAndUpdate(request.projectId, {
+  //   $push: { unit: { unit_id: project._id, name: project.title } },
+  // });
   
   return project;
 }
