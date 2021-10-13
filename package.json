@@ -6,7 +6,8 @@
   "author": "phamquyetthang <quyetthang.phucchi@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon index.ts"
+    "dev": "nodemon index.ts",
+    "start": "nodemon index.ts"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
