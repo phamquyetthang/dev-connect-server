@@ -43,6 +43,7 @@ const docSchema = new Schema({
       'TRACE',
     ],
   },
+  host: String,
   endpoint: {
     type: String,
     require: true,
@@ -67,6 +68,7 @@ const docSchema = new Schema({
   },
   members: [
     {
+      _id: false,
       id_member: {
         type: Schema.Types.ObjectId,
         ref: 'Accounts',
