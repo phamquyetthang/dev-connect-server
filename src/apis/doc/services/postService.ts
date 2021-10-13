@@ -1,5 +1,4 @@
 import HttpException from '../../../common/helpers/HttpException';
-import userSchema from '../../../models/user/account/model';
 import docModel from '../../../models/doc/model';
 import projectModel from '../../../models/project/information/model';
 import IDoc from '../../../models/doc/interface';
@@ -12,6 +11,7 @@ export async function createDocService(request: IDoc, projectId: string) {
   const newDoc = new docModel({
     projectId: projectId,
     description: request.description,
+    host: request.host,
     endpoint: request.endpoint,
     method: request.method,
     title: request.title,

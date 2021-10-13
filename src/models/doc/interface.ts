@@ -35,6 +35,7 @@ export default interface IDoc {
   projectId: string;
   title: string;
   method: METHOD_API;
+  host: string;
   endpoint: string;
   requestType: REQUEST_TYPE;
   requestBody: object;
