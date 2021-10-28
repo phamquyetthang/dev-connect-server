@@ -1,20 +1,37 @@
 import HttpException from '../../../common/helpers/HttpException';
 import { IConversation } from '../../../models/conversation/interface';
 import conversationModel from '../../../models/conversation/model';
-import todoModel from '../../../models/user/todo/model';
+type IChatContacts = { id: string; name: string; lastMess: string };
 
 export async function getMyChatsService(userId: string) {
   const conversations = await conversationModel
     .find({
-      $or: [{ user1: userId }, { user2: userId }],
+      $or: [
+        { members: { $exists: true, $ne: [] } },
+        { members: { $elemMatch: { member_id: userId } } },
+      ],
     })
-    .sort({ recent_date: -1 })
     .exec();
+
+  const chatContacts: IChatContacts[] = conversations.map((i) => ({
+    id: i._id,
+    name: i.name,
+    lastMess: [...i.messages].pop()?.text || '',
+  }));
+
+  return chatContacts;
+}
+
+export async function getChatContentService(id: string) {
+  const conversations = await conversationModel.findById(id);
+  if (!conversations) {
+    throw new HttpException(400, 'Conversation id is not exist');
+  }
   return conversations;
 }
 
 export async function getOneChatsService(userId: string, useIdTo: string) {
-  const conversations = await conversationModel
+  const conversations = (await conversationModel
     .findOne({
       $or: [
         { $and: [{ user1: userId }, { user2: useIdTo }] },
@@ -22,7 +39,7 @@ export async function getOneChatsService(userId: string, useIdTo: string) {
       ],
     })
     .sort({ updatedAt: -1 })
-    .exec() as IConversation;
+    .exec()) as IConversation;
   if (!conversations) {
     throw new HttpException(400, 'Conversation id is not exist');
   }
