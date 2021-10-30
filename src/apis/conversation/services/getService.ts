@@ -3,20 +3,26 @@ import { IConversation } from '../../../models/conversation/interface';
 import conversationModel from '../../../models/conversation/model';
 type IChatContacts = { id: string; name: string; lastMess: string };
 
-export async function getMyChatsService(userId: string) {
+export async function getMyChatsService(userId: string, projectId: string) {
   const conversations = await conversationModel
     .find({
-      $or: [
-        { members: { $exists: true, $ne: [] } },
-        { members: { $elemMatch: { member_id: userId } } },
+      $and: [
+        { projectId: projectId },
+        {
+          $or: [
+            { members: { $exists: true, $ne: [] } },
+            { members: { $elemMatch: { member_id: userId } } },
+          ],
+        },
       ],
     })
+    .sort({ updatedAt: -1 })
     .exec();
 
   const chatContacts: IChatContacts[] = conversations.map((i) => ({
     id: i._id,
     name: i.name,
-    lastMess: [...i.messages].pop()?.text || '',
+    lastMess: i.messages[0]?.text || '',
   }));
 
   return chatContacts;

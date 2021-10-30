@@ -1,4 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
+import Joi from 'joi';
+import { validateRequest } from '../../../common/helpers/validate';
 import {
   getChatContentService,
   getMyChatsService,
@@ -11,7 +13,15 @@ export async function getMyChatsControl(
   next: NextFunction
 ) {
   try {
-    const result = await getMyChatsService(req.user.id);
+    const projectId = req.query.projectId || '';
+
+    const reqSchema = Joi.object({
+      projectId: Joi.string().required(),
+    });
+    const { projectId: project_id } = await validateRequest(reqSchema, {
+      projectId,
+    });
+    const result = await getMyChatsService(req.user.id, project_id);
     res.status(200).json(result);
   } catch (error) {
     next(error);

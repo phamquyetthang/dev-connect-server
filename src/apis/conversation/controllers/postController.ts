@@ -35,7 +35,6 @@ export async function sendMessageToGroupControl(
 ) {
   try {
     const model: ISendMessageUserReq = req.body;
-    console.log("🚀 ~ file: postController.ts ~ line 38 ~ model", model)
     const reqSchema = Joi.object<ISendMessageUserReq>({
       conversationId: Joi.string().required(),
       text: Joi.string().required(),
