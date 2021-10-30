@@ -35,52 +35,21 @@ export async function sendMessageToGroupService(
   userId: string,
   request: ISendMessageUserReq
 ) {
-  // if (!request.conversationId) {
-  //   let newConversation = await conversationModel
-  //     .findOne({
-  //       $or: [
-  //         { $and: [{ user1: userId }, { user2: request.to }] },
-  //         { $and: [{ user1: request.to }, { user2: userId }] },
-  //       ],
-  //     })
-  //     .exec();
-  //   if (newConversation) {
-  //     newConversation.messages.unshift({
-  //       to: request.to,
-  //       text: request.text,
-  //       from: userId,
-  //     } as IMessage);
-  //   } else {
-  //     newConversation = new conversationModel({
-  //       user1: userId,
-  //       user2: request.to,
-  //       messages: [
-  //         {
-  //           from: userId,
-  //           to: request.to,
-  //           text: request.text,
-  //         },
-  //       ],
-  //     });
-  //   }
-
-  //   await newConversation.save();
-  //   return newConversation;
-  // } else {
   const conversation = await conversationModel
-    .findById(request.conversationId)
-    .exec();
-
-  if (!conversation) {
-    throw new HttpException(400, 'Conversation id is not exist');
-  }
-  conversation.messages.unshift({
-    text: request.text,
-    from: userId,
-  } as IMessage);
-  await conversation.save();
+    .findByIdAndUpdate(
+      request.conversationId,
+      {
+        $push: {
+          messages: {
+            $each: [{ text: request.text, from: userId }],
+            $position: 0,
+          },
+        },
+      },
+      { new: true }
+    )
+    .populate('messages.from', '_id first_name last_name');
   return conversation;
-  // }
 }
 
 export async function createChatDocService(userId: string, docId: string) {

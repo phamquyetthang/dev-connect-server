@@ -29,7 +29,7 @@ export async function getMyChatsService(userId: string, projectId: string) {
 }
 
 export async function getChatContentService(id: string) {
-  const conversations = await conversationModel.findById(id);
+  const conversations = await conversationModel.findById(id).populate('messages.from', '_id first_name last_name');
   if (!conversations) {
     throw new HttpException(400, 'Conversation id is not exist');
   }
