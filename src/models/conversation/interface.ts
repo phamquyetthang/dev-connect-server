@@ -1,6 +1,10 @@
 export interface IConversation {
-  user1: string;
-  user2: string;
+  name: string;
+  projectId: string;
+  unitId: string;
+  admin: string[];
+  isSingle: boolean;
+  members: string[];
   messages: IMessage[];
   createdAt: Date;
   updatedAt: Date;
@@ -8,7 +12,7 @@ export interface IConversation {
 
 export interface IMessage {
   from: string;
-  to: string;
+  tag: string[];
   read: boolean;
   text: string;
   show_on_from: boolean;

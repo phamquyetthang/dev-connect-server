@@ -1,11 +1,23 @@
 import { Router } from 'express';
 import authMiddleware from '../../common/middleware/authentication';
-import { getMyChatsControl } from './controllers/getController';
+import {
+  getChatContentControl,
+  getMyChatsControl,
+  getOneChatsControl,
+} from './controllers/getController';
+import {
+  createChatroomControl,
+  sendMessageToGroupControl,
+} from './controllers/postController';
 
-const todoRouter = Router();
-const todoPath = '/conversation';
+const chatRouter = Router();
+const chatPath = '/chat';
 
-todoRouter.post(todoPath, authMiddleware, getMyChatsControl);
-// todoRouter.get(todoPath, authMiddleware, getListTodoController);
+chatRouter.get(chatPath, authMiddleware, getMyChatsControl);
+chatRouter.post(chatPath + '/group', authMiddleware, createChatroomControl);
+chatRouter.get(chatPath + '/:id', authMiddleware, getChatContentControl);
+chatRouter.get(chatPath + '/toUser/:id', authMiddleware, getOneChatsControl);
+// chatRouter.post(chatPath + '/toUser', authMiddleware, sendMessageUserControl);
+chatRouter.post(chatPath, authMiddleware, sendMessageToGroupControl);
 
-export default todoRouter;
+export default chatRouter;
