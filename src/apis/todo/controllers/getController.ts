@@ -8,7 +8,8 @@ export async function getListTodoController(
 ) {
   try {
     const userId = req.user.id;
-    const response = await getListTodoService(userId);
+    const searchKey = req.query.searchKey || '';
+    const response = await getListTodoService(userId, searchKey.toString());
     res.status(200).json(response);
   } catch (error) {
     next(error);

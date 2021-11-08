@@ -30,6 +30,6 @@ const todoSchema = new Schema(
   },
   { timestamps: true }
 );
-
+todoSchema.index({ '$**': 'text' });
 const todoModel = model<ITodo & Document>('TodoTasks', todoSchema);
 export default todoModel;
