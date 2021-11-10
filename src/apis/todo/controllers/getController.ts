@@ -9,7 +9,8 @@ export async function getListTodoController(
   try {
     const userId = req.user.id;
     const searchKey = req.query.searchKey || '';
-    const response = await getListTodoService(userId, searchKey.toString());
+    const page = req.query.page || 0;
+    const response = await getListTodoService(userId, String(searchKey), Number(page));
     res.status(200).json(response);
   } catch (error) {
     next(error);
