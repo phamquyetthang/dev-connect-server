@@ -41,6 +41,8 @@ export async function sendMessageToGroupControl(
     });
     const data: ISendMessageUserReq = await validateRequest(reqSchema, model);
     const result = await sendMessageToGroupService(req.user.id, data);
+    const io = req.app.get('socketIo');
+    io.in(data.conversationId).emit('new_message', result);
     res.status(201).json(result);
   } catch (error) {
     next(error);
