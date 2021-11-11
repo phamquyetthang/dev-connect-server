@@ -35,3 +35,8 @@ export async function changeIndexService(request: IChangeIndexReq) {
   const newList = await todoModel.find().sort({ number: -1 });
   return newList;
 }
+
+export async function deleteTodoService(id: string) {
+  const todo = await todoModel.findByIdAndRemove(id);
+  return todo;
+}

@@ -2,7 +2,11 @@ import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 import { validateRequest } from '../../../common/helpers/validate';
 import { IChangeIndexReq, IUpdateTodoReq } from '../interface';
-import { changeIndexService, updateTodoService } from '../services/putService';
+import {
+  changeIndexService,
+  deleteTodoService,
+  updateTodoService,
+} from '../services/putService';
 
 export async function updateTodoController(
   req: Request,
@@ -39,6 +43,20 @@ export async function changeIndexControl(
   try {
     const data: IChangeIndexReq = await validateRequest(reqSchema, request);
     const response = await changeIndexService(data);
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function deleteTodoControl(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const id = req.params.id;
+  try {
+    const response = await deleteTodoService(id);
     res.status(200).json(response);
   } catch (error) {
     next(error);

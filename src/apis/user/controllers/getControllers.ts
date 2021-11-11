@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { getInfoService } from '../services/getServices';
+import { getInfoService, getPreferencesService } from '../services/getServices';
 
 export const getInfoController = async (
   req: Request,
@@ -14,3 +14,15 @@ export const getInfoController = async (
     next(error);
   }
 };
+
+export const getPreferencesControl = async (req: Request,
+  res: Response,
+  next: NextFunction) => {
+    const userId = req.user.id;
+    try {
+      const response = await getPreferencesService(userId);
+      res.status(200).json(response);
+    } catch (error) {
+      next(error);
+    }
+}
