@@ -7,5 +7,4 @@ export interface ITask {
   members: string[];
   deadline?: Date;
   status: string;
-  template?: string;
 }

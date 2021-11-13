@@ -32,7 +32,6 @@ const taskSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'TaskStatus',
   },
-  template: String,
 });
 
 const taskModel = model<ITask & Document>('Tasks', taskSchema);
