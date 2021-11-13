@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import IDoc from './interface';
 
 const { Schema } = mongoose;
@@ -82,6 +82,10 @@ const docSchema = new Schema({
   extension: {
     type: String,
   },
+  tasks: {
+    type: Schema.Types.ObjectId,
+    ref: 'Tasks'
+  }
 });
 
 const docModel = mongoose.model<IDoc & Document>('Docs', docSchema);
