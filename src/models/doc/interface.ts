@@ -48,4 +48,5 @@ export default interface IDoc {
     name: string;
   }>;
   extension: string[];
+  tasks: string[];
 }

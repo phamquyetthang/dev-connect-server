@@ -3,7 +3,7 @@ import docModel from '../../../models/doc/model';
 import projectModel from '../../../models/project/information/model';
 import IDoc from '../../../models/doc/interface';
 
-export async function createDocService(request: IDoc, projectId: string) {
+export async function createDocService(request: Omit<IDoc, '_id'>, projectId: string) {
   const user = await projectModel.findById(projectId);
   if (!user) {
     throw new HttpException(400, 'Tài khoản của bạn không tồn tại');
