@@ -2,8 +2,7 @@ import todoModel from '../../../models/user/todo/model';
 
 export async function getListTodoService(
   userId: string,
-  searchKey: string,
-  page: number
+  searchKey?: string,
 ) {
   const todo = await todoModel
     .find({
