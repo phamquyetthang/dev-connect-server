@@ -28,26 +28,28 @@ export async function getMyChatsService(userId: string, projectId: string) {
   return chatContacts;
 }
 
-export async function getChatContentService(id: string) {
-  const conversations = await conversationModel.findById(id).populate('messages.from', '_id first_name last_name');
+export async function getChatContentService(id: string, page: number) {
+  const conversations = await conversationModel
+    .findById(id)
+    .populate('messages.from', '_id first_name last_name');
   if (!conversations) {
     throw new HttpException(400, 'Conversation id is not exist');
   }
   return conversations;
 }
 
-export async function getOneChatsService(userId: string, useIdTo: string) {
-  const conversations = (await conversationModel
-    .findOne({
-      $or: [
-        { $and: [{ user1: userId }, { user2: useIdTo }] },
-        { $and: [{ user1: useIdTo }, { user2: userId }] },
-      ],
-    })
-    .sort({ updatedAt: -1 })
-    .exec()) as IConversation;
-  if (!conversations) {
-    throw new HttpException(400, 'Conversation id is not exist');
-  }
-  return conversations;
-}
+// export async function getOneChatsService(userId: string, useIdTo: string) {
+//   const conversations = (await conversationModel
+//     .findOne({
+//       $or: [
+//         { $and: [{ user1: userId }, { user2: useIdTo }] },
+//         { $and: [{ user1: useIdTo }, { user2: userId }] },
+//       ],
+//     })
+//     .sort({ updatedAt: -1 })
+//     .exec()) as IConversation;
+//   if (!conversations) {
+//     throw new HttpException(400, 'Conversation id is not exist');
+//   }
+//   return conversations;
+// }

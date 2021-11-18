@@ -87,6 +87,6 @@ const docSchema = new Schema({
     ref: 'Tasks'
   }
 });
-
+docSchema.index({ '$**': 'text' });
 const docModel = mongoose.model<IDoc & Document>('Docs', docSchema);
 export default docModel;

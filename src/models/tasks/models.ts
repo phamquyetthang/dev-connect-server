@@ -2,8 +2,14 @@ import { Document, model, Schema } from 'mongoose';
 import { ITask } from './interface';
 
 const taskSchema = new Schema({
+  projectId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Projects',
+    require: true,
+  },
   unitId: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'Docs',
     require: true,
   },
   title: {

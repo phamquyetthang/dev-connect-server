@@ -4,7 +4,6 @@ import { validateRequest } from '../../../common/helpers/validate';
 import {
   getChatContentService,
   getMyChatsService,
-  getOneChatsService,
 } from '../services/getService';
 
 export async function getMyChatsControl(
@@ -34,23 +33,24 @@ export async function getChatContentControl(
 ) {
   try {
     const id: string = req.params.id;
-    const result = await getChatContentService(id);
+    const page = req.query.page || 0;
+    const result = await getChatContentService(id, Number(page));
     res.status(200).json(result);
   } catch (error) {
     next(error);
   }
 }
 
-export async function getOneChatsControl(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    const useIdTo: string = req.params.to;
-    const result = await getOneChatsService(req.user.id, useIdTo);
-    res.status(200).json(result);
-  } catch (error) {
-    next(error);
-  }
-}
+// export async function getOneChatsControl(
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) {
+//   try {
+//     const useIdTo: string = req.params.to;
+//     const result = await getOneChatsService(req.user.id, useIdTo);
+//     res.status(200).json(result);
+//   } catch (error) {
+//     next(error);
+//   }
+// }

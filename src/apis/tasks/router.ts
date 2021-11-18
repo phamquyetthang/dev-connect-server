@@ -7,12 +7,12 @@ import {
 import { deleteTaskControl } from './controllers/putController';
 
 const taskRouter = Router();
-const docPath = '/tasks';
+const taskPath = '/tasks';
 
 taskRouter
-  .get(docPath, authMiddleware, getListTasksControl)
-  .get(docPath + '/status', authMiddleware, getListStatusTasksControl)
-  .delete(docPath +'/:id', authMiddleware, deleteTaskControl)
-  .delete(docPath +'/status/:id', authMiddleware, deleteTaskControl)
+  .get(taskPath, authMiddleware, getListTasksControl)
+  .get(taskPath + '/status', authMiddleware, getListStatusTasksControl)
+  .delete(taskPath +'/:id', authMiddleware, deleteTaskControl)
+  .delete(taskPath +'/status/:id', authMiddleware, deleteTaskControl)
 
 export default taskRouter;
