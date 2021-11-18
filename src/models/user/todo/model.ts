@@ -11,6 +11,7 @@ const todoSchema = new Schema(
     number: {
       type: Number,
       require: true,
+      // unique: true,
     },
     title: {
       type: String,
