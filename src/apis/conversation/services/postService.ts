@@ -1,5 +1,4 @@
-import HttpException from '../../../common/helpers/HttpException';
-import { IMessage } from '../../../models/conversation/interface';
+
 import conversationModel from '../../../models/conversation/model';
 import docModel from '../../../models/doc/model';
 import { ICreateChatroomReq, ISendMessageUserReq } from '../interface';
