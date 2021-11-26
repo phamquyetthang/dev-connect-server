@@ -2,7 +2,24 @@ import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 import { validateRequest } from '../../../common/helpers/validate';
 import { IEditSnippetReq } from '../interfaces';
-import { editSnippetService } from '../services/putServices';
+import {
+  changeThemeService,
+  editSnippetService,
+} from '../services/putServices';
+
+export async function changeThemeControl(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { userId, theme }: { userId: string; theme: string } = req.body;
+    const result = await changeThemeService(userId, theme);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+}
 
 export async function editSnippetControl(
   req: Request,

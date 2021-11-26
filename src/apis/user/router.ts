@@ -4,6 +4,7 @@ import {
   getInfoController,
   getPreferencesControl,
 } from './controllers/getControllers';
+import { changeThemeControl } from './controllers/putControllers';
 import { registerController } from './controllers/register';
 
 const userRouter = Router();
@@ -12,6 +13,7 @@ const usePath = '/user';
 userRouter.post(usePath + '/register', registerController);
 userRouter.get(usePath + '/info', authMiddleware, getInfoController);
 userRouter.get(usePath + '/preferences', authMiddleware, getPreferencesControl);
+userRouter.put(usePath + '/theme', authMiddleware, changeThemeControl);
 userRouter.put(usePath + '/snippet', authMiddleware, getPreferencesControl);
 
 export default userRouter;
