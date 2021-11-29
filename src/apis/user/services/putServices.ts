@@ -33,16 +33,19 @@ export async function editSnippetService({
   snippetId,
 }: IEditSnippetReq) {
   try {
-    const preference = await userPreferencesModel.findOne({
-      $and: [
-        {
-          userId: userId,
-        },
-        {
-          snippets: { $elemMatch: { _id: snippetId } },
-        },
-      ],
-    });
+    const preference = await userPreferencesModel.findOne(
+      {
+        $and: [
+          {
+            userId: userId,
+          },
+          {
+            snippets: { $elemMatch: { _id: snippetId } },
+          },
+        ],
+      },
+      { new: true }
+    );
     return preference;
   } catch (error) {
     throw error;

@@ -3,6 +3,7 @@ import Joi from 'joi';
 import { validateRequest } from '../../../common/helpers/validate';
 import {
   getChatContentService,
+  getChatFromDocService,
   getMyChatsService,
 } from '../services/getService';
 
@@ -41,16 +42,26 @@ export async function getChatContentControl(
   }
 }
 
-// export async function getOneChatsControl(
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) {
-//   try {
-//     const useIdTo: string = req.params.to;
-//     const result = await getOneChatsService(req.user.id, useIdTo);
-//     res.status(200).json(result);
-//   } catch (error) {
-//     next(error);
-//   }
-// }
+export async function getChatFromDocControl(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const docId: string = req.params.docId;
+    const newChat = await getChatFromDocService(req.user.id, docId);
+    const listChat = await getMyChatsService(req.user.id, newChat.projectId);
+
+    const response = {
+      listChat,
+      newChat: {
+        id: newChat._id,
+        name: newChat.name,
+        messages: newChat.messages,
+      },
+    };
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+}
