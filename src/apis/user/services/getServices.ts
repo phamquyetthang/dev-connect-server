@@ -22,18 +22,18 @@ export const getPreferencesService = async (userId: string) => {
         {
           name: 'js axios',
           template: `
-          axios.'$1'('$2', {
-            '$3'
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
-          .then(function () {
-            // always executed
-          });  
+axios.'$method'('$url', {
+  '$req'
+})
+.then(function (response) {
+  console.log(response);
+})
+.catch(function (error) {
+  console.log(error);
+})
+.then(function () {
+  // always executed
+});  
         `,
           isDefault: true,
         },
