@@ -1,7 +1,13 @@
 import HttpException from '../../../common/helpers/HttpException';
-import { IConversation } from '../../../models/conversation/interface';
 import conversationModel from '../../../models/conversation/model';
-type IChatContacts = { id: string; name: string; lastMess: string };
+import { IConversation } from '../../../models/conversation/interface';
+import docModel from '../../../models/doc/model';
+type IChatContacts = {
+  id: string;
+  name: string;
+  lastMess: string;
+  unitId: string;
+};
 
 export async function getMyChatsService(userId: string, projectId: string) {
   const conversations = await conversationModel
@@ -23,6 +29,7 @@ export async function getMyChatsService(userId: string, projectId: string) {
     id: i._id,
     name: i.name,
     lastMess: i.messages[0]?.text || '',
+    unitId: i.unitId || '',
   }));
 
   return chatContacts;
@@ -36,6 +43,34 @@ export async function getChatContentService(id: string, page: number) {
     throw new HttpException(400, 'Conversation id is not exist');
   }
   return conversations;
+}
+
+export async function getChatFromDocService(
+  userId: string,
+  docId: string
+): Promise<IConversation> {
+  const conversation = await conversationModel
+    .findOne({ unitId: docId })
+    .exec();
+
+  if (!conversation) {
+    const doc = await docModel
+      .findById(docId)
+      .select('_id title members projectId')
+      .exec();
+    const members = doc?.members.map((i) => i.id_member) || [];
+    const newConversation = new conversationModel({
+      name: doc?.title,
+      projectId: doc?.projectId,
+      unitId: doc?._id,
+      admin: [userId],
+      members,
+      isSingle: members?.length === 2,
+    });
+    await newConversation.save();
+    return newConversation;
+  }
+  return conversation;
 }
 
 // export async function getOneChatsService(userId: string, useIdTo: string) {

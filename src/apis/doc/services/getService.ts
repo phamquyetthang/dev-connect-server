@@ -9,7 +9,7 @@ export async function getListDocService(
   const docs = docModel.find({
     projectId,
     ...(!!searchKey && { $text: { $search: searchKey } }),
-  });
+  }).select('-projectId -requestBody -requestType -responseBody -responseType');
   const data = await pagingHelper(docs, page);
   return data;
 }

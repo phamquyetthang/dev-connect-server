@@ -1,4 +1,5 @@
 export interface IConversation {
+  _id: string;
   name: string;
   projectId: string;
   unitId: string;

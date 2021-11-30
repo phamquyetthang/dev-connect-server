@@ -1,31 +1,33 @@
-import mongoose from "mongoose";
-import IProfile from "./interface";
+import mongoose from 'mongoose';
+import IProfile from './interface';
 const profileSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Accounts",
+    ref: 'Accounts',
   },
   company: {
-    type: {
-      type: String,
-    },
+    type: String,
+    default: '',
   },
   website: {
     type: String,
+    default: '',
   },
   location: {
     type: String,
+    default: '',
   },
   status: {
     type: String,
-    required: true,
+    default: '',
   },
   skills: {
     type: [String],
-    required: true,
+    default: [],
   },
   bio: {
     type: String,
+    default: '',
   },
   experience: [
     {
@@ -40,9 +42,8 @@ const profileSchema = new mongoose.Schema({
       },
       from: {
         type: Date,
-        required: true,
       },
-      to: { type: Date, required: true },
+      to: { type: Date },
       current: { type: Boolean, default: false },
       description: {
         type: String,
@@ -62,9 +63,8 @@ const profileSchema = new mongoose.Schema({
       },
       from: {
         type: Date,
-        required: true,
       },
-      to: { type: Date, required: true },
+      to: { type: Date },
       current: { type: Boolean, default: false },
       description: {
         type: String,
@@ -91,53 +91,11 @@ const profileSchema = new mongoose.Schema({
       type: String,
     },
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-  followings: [
-    {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Accounts",
-      },
-    },
-  ],
-  followers: [
-    {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Accounts",
-      },
-    },
-  ],
-  friends: [
-    {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Accounts',
-      },
-      date: {
-        type: Date,
-        default: Date.now,
-      },
-    },
-  ],
-  friend_requests: [
-    {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Accounts',
-      },
-      date: {
-        type: Date,
-        default: Date.now,
-      },
-    },
-  ],
 });
 
-export default mongoose.model<IProfile & mongoose.Document>(
-  "Profiles",
+const userProfileModel = mongoose.model<IProfile & mongoose.Document>(
+  'Profiles',
   profileSchema
 );
+
+export default userProfileModel;
