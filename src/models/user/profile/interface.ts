@@ -10,15 +10,6 @@ export default interface IProfile {
   experience: IExperience[];
   education: [];
   social: ISocial;
-  followings: IFollower[];
-  followers: IFollower[];
-  date: Date;
-  friends: IFriend[];
-  friend_requests: IFriend[];
-}
-export interface IFriend {
-  user: string;
-  date: Date;
 }
 export interface IExperience {
   _id: string;
@@ -49,7 +40,4 @@ export interface ISocial extends Record<string, string> {
   instagram: string;
   linkedin: string;
   zalo: string;
-}
-export interface IFollower {
-  user: string;
 }

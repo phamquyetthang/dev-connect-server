@@ -1,4 +1,3 @@
-import { string } from 'joi';
 import { Document, model, Schema } from 'mongoose';
 import IUserPreferences from './interface';
 const userPreferencesSchema = new Schema({
@@ -9,7 +8,7 @@ const userPreferencesSchema = new Schema({
   theme: {
     type: String,
     require: true,
-    default: 'light',
+    default: 'dark',
   },
   language: {
     type: String,
