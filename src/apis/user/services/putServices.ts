@@ -28,13 +28,16 @@ export async function editUserProfileService(
   userId: string,
   data: IEditUserProfileReq
 ) {
-  const profile = await userProfileModel.findOneAndUpdate(
-    { user: userId },
-    {
-      ...data,
-    },
-    { new: true }
-  );
+  const profile = await userProfileModel
+    .findOneAndUpdate(
+      { user: userId },
+      {
+        ...data,
+      },
+      { new: true }
+    )
+    .populate('user', 'first_name last_name email')
+    .select('company website location status skills bio -_id');
   return profile;
 }
 
