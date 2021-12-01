@@ -22,8 +22,8 @@ const profileSchema = new mongoose.Schema({
     default: '',
   },
   skills: {
-    type: [String],
-    default: [],
+    type: String,
+    default: '',
   },
   bio: {
     type: String,
