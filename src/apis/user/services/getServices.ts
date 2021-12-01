@@ -12,12 +12,22 @@ export const getInfoService = async (id: string) => {
 };
 
 export const getUserProfileService = async (userId: string) => {
-  const user = await userProfileModel.findOne({ user: userId });
-  if (!user) {
-    const newProfile = await userProfileModel.create({ user: userId });
+  const profile = await userProfileModel
+    .findOne({ user: userId })
+    .populate('user', 'first_name last_name email')
+    .select('company website location status skills bio -_id')
+    .exec();
+
+  if (!profile) {
+
+    let newProfile = await userProfileModel.create({ user: userId });
+    newProfile = await newProfile
+      .populate('user', 'first_name last_name email')
+      .execPopulate();
     return newProfile;
   }
-  return user;
+  
+  return profile;
 };
 
 export const getPreferencesService = async (userId: string) => {
