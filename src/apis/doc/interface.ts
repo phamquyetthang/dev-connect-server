@@ -1,5 +1,10 @@
-import IDoc from '../../models/doc/interface';
+import IDoc, { IDocSchema } from '../../models/doc/interface';
 
 export type ICreateDocReq = IDoc & {
   projectId: string;
 };
+export interface IEditDocReq {
+  userId: string,
+  docId: string,
+  data: IDocSchema,
+}

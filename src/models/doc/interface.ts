@@ -30,8 +30,36 @@ export enum REQUEST_TYPE {
   X_WWW_FORM_URLENCODED = 'xWwwFormUrlencoded',
 }
 
-export default interface IDoc {
-  _id: string;
+export interface IDocHistory{
+  author: string;
+  docId: string;
+  diff: any;
+  createdAt: Date;
+}
+
+export interface IDocEdit {
+  // _id: string;
+  projectId?: string;
+  title?: string;
+  method?: METHOD_API;
+  host?: string;
+  endpoint?: string;
+  requestType?: REQUEST_TYPE;
+  requestBody?: object;
+  responseType?: 'json' | 'text' | 'key_value';
+  responseBody?: object;
+  status?: IStatus[];
+  description?: string;
+  members?: Array<{
+    id_member?: string;
+    name?: string;
+  }>;
+  extension?: string[];
+  tasks?: string[];
+}
+
+export interface IDocSchema {
+  // _id: string;
   projectId: string;
   title: string;
   method: METHOD_API;
@@ -49,4 +77,11 @@ export default interface IDoc {
   }>;
   extension: string[];
   tasks: string[];
+}
+
+export default interface IDoc extends IDocSchema{
+_id: string;
+}
+export interface InstanceMethods  {
+  eventLog: (data: any) => void;
 }

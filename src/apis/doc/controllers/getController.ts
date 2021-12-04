@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { getListDocService } from '../services/getService';
+import {
+  getDocHistoryService,
+  getListDocService,
+} from '../services/getService';
 
 export async function getListDocController(
   req: Request,
@@ -19,4 +22,19 @@ export async function getListDocController(
   } catch (error) {
     next(error);
   }
+}
+
+export async function getDocHistoryControl(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const docId = req.params.docId;
+    const response = await getDocHistoryService(docId);
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+  // getDocHistory
 }
