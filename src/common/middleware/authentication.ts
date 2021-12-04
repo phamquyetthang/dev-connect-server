@@ -16,7 +16,6 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
       req.user.id = user.id;
       next();
     } catch (error) {
-      console.log("🚀 ~ file: authentication.ts ~ line 19 ~ authMiddleware ~ error", error)
       return res.status(401).json({ message: "Token is not valid" });
     }
   }

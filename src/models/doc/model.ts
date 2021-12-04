@@ -1,9 +1,16 @@
-import mongoose, { Document } from 'mongoose';
-import IDoc from './interface';
+import mongoose, {
+  Document,
+  Model,
+  UpdateQuery,
+  UpdateWithAggregationPipeline,
+} from 'mongoose';
+import eventLogMiddleware from '../../common/middleware/eventLog';
+import { updateDocByUser } from '../../common/static';
+import IDoc, { IDocHistory, IDocSchema, InstanceMethods } from './interface';
 
 const { Schema } = mongoose;
 
-const docStatusSchema = new Schema({ // FE done, BE done
+const docStatusSchema = new Schema({
   name: {
     type: String,
   },
@@ -13,12 +20,36 @@ const docStatusSchema = new Schema({ // FE done, BE done
   description: {
     type: String,
   },
-})
+});
 
 export const docStatusModel = mongoose.model('DocStatus', docStatusSchema);
 
+const docHistorySchema = new Schema(
+  {
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: 'Accounts',
+    },
+    docId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Docs',
+    },
+    diff: Schema.Types.Mixed,
+  },
+  { timestamps: { createdAt: true } }
+);
 
-const docSchema = new Schema({
+export const docHistoryModel = mongoose.model<IDocHistory & Document>(
+  'DocHistories',
+  docHistorySchema
+);
+
+const docSchema = new Schema<
+  IDoc,
+  Model<IDoc, {}, InstanceMethods>,
+  undefined,
+  InstanceMethods
+>({
   projectId: {
     type: Schema.Types.ObjectId,
     require: true,
@@ -58,10 +89,12 @@ const docSchema = new Schema({
     require: true,
   },
   responseBody: Object,
-  status: [{
-    type: Schema.Types.ObjectId,
-    ref: 'DocStatus'
-  }],
+  status: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'DocStatus',
+    },
+  ],
   description: {
     type: String,
     require: true,
@@ -84,9 +117,23 @@ const docSchema = new Schema({
   },
   tasks: {
     type: Schema.Types.ObjectId,
-    ref: 'Tasks'
-  }
+    ref: 'Tasks',
+  },
 });
 docSchema.index({ '$**': 'text' });
-const docModel = mongoose.model<IDoc & Document>('Docs', docSchema);
+
+docSchema.plugin(eventLogMiddleware);
+docSchema.statics.updateDocByUser = updateDocByUser;
+interface IUserDocument extends IDocSchema, Document {
+  eventLog: (data: any) => void;
+}
+interface IUserModel extends Model<IUserDocument> {
+  updateDocByUser(
+    userId: string,
+    docId: string,
+    update?: UpdateQuery<any> | UpdateWithAggregationPipeline
+  ): Promise<any>;
+}
+const docModel = mongoose.model<IUserDocument, IUserModel>('Docs', docSchema);
+
 export default docModel;
