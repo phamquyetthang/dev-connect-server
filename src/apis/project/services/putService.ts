@@ -1,6 +1,7 @@
 import HttpException from '../../../common/helpers/HttpException';
 import projectModel from '../../../models/project/information/model';
 import userModel from '../../../models/user/account/model';
+import { IEditProjectReq } from '../interface';
 
 export async function addMemberService(email: string, projectId: string) {
   const member = await userModel.findOne({ email: email });
@@ -28,4 +29,27 @@ export async function addMemberService(email: string, projectId: string) {
   } catch (error) {
     throw new HttpException(401, 'error');
   }
+}
+
+export async function editProjectService(request: IEditProjectReq) {
+  const newProject = await projectModel.findByIdAndUpdate(
+    request.projectId,
+    {
+      name: request.name,
+      description: request.description,
+      readme: request.readme,
+    },
+    { new: true }
+  );
+  return newProject;
+}
+
+export async function deleteMemberService(projectId: string, memberId: string) {
+  return await projectModel.findByIdAndUpdate(
+    projectId,
+    {
+      $pull: { members: { member_id: memberId } },
+    },
+    { new: true }
+  );
 }

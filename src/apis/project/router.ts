@@ -12,7 +12,11 @@ import {
   getProjectMemberController,
   getTagTasksControl,
 } from './controllers/getController';
-import { addMemberController } from './controllers/putController';
+import {
+  addMemberController,
+  deleteMemberController,
+  editProjectController,
+} from './controllers/putController';
 
 const projectRouter = Router();
 const projectPath = '/project';
@@ -33,10 +37,14 @@ projectRouter
     getProjectMemberController
   );
 
-projectRouter.put(
-  projectPath + '/addMember',
+projectRouter
+  .put(projectPath + '/addMember', authMiddleware, addMemberController)
+  .put(projectPath + '/:id', authMiddleware, editProjectController);
+
+projectRouter.delete(
+  projectPath + '/member',
   authMiddleware,
-  addMemberController
+  deleteMemberController
 );
 
 export default projectRouter;
