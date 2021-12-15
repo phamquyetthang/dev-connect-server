@@ -1,9 +1,10 @@
 import { Document, model, Schema } from 'mongoose';
-import { ITaskStatus, ITaskTemplate } from './interface';
+import { ITagTask, ITaskStatus, ITaskTemplate } from './interface';
 
 const taskStatusSchema = new Schema({
   projectId: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'Projects',
     require: true,
   },
   name: {
@@ -20,7 +21,8 @@ export const taskStatusModel = model<ITaskStatus & Document>(
 
 const templateTaskSchema = new Schema({
   projectId: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'Projects',
     require: true,
   },
   name: {
@@ -32,7 +34,25 @@ const templateTaskSchema = new Schema({
     require: true,
   },
 });
+
 export const taskTemplateModel = model<ITaskTemplate & Document>(
   'TaskTemplates',
   templateTaskSchema
+);
+
+const tagTaskSchema = new Schema({
+  projectId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Projects',
+    require: true,
+  },
+  title: {
+    type: String,
+    require: true,
+  },
+});
+
+export const tagTaskModel = model<ITagTask & Document>(
+  'tagTasks',
+  tagTaskSchema
 );

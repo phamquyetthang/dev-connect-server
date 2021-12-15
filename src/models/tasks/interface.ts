@@ -5,7 +5,7 @@ export interface ITask {
   title: string;
   description: string;
   tags: string[];
-  members: string[];
+  assignee: string;
   deadline?: Date;
   status: string;
 }

@@ -1,5 +1,4 @@
 import pagingHelper from '../../../common/helpers/pagingHelper';
-import { taskStatusModel } from '../../../models/project/extensions/model';
 import taskModel from '../../../models/tasks/models';
 
 export async function getListTaskService(
@@ -13,9 +12,4 @@ export async function getListTaskService(
   });
   const data = await pagingHelper(task, page);
   return data;
-}
-
-export async function getListStatusTaskService(projectId: string) {
-  const status = await taskStatusModel.find({ projectId });
-  return status;
 }

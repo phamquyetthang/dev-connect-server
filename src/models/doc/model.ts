@@ -1,12 +1,10 @@
 import mongoose, {
   Document,
   Model,
-  UpdateQuery,
-  UpdateWithAggregationPipeline,
 } from 'mongoose';
 import eventLogMiddleware from '../../common/middleware/eventLog';
 import { updateDocByUser } from '../../common/static';
-import IDoc, { IDocHistory, IDocSchema, InstanceMethods } from './interface';
+import IDoc, { IDocEdit, IDocHistory, IDocSchema, InstanceMethods } from './interface';
 
 const { Schema } = mongoose;
 
@@ -131,7 +129,7 @@ interface IUserModel extends Model<IUserDocument> {
   updateDocByUser(
     userId: string,
     docId: string,
-    update?: UpdateQuery<any> | UpdateWithAggregationPipeline
+    update: IDocEdit
   ): Promise<any>;
 }
 const docModel = mongoose.model<IUserDocument, IUserModel>('Docs', docSchema);

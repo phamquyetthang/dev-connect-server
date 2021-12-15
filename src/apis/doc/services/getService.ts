@@ -15,6 +15,18 @@ export async function getListDocService(
   return data;
 }
 
+export async function getListDocNameService(projectId: string) {
+  return await docModel
+    .find({
+      projectId,
+    })
+    .select('_id title members');
+}
+
 export async function getDocHistoryService(docId: string) {
-  return await docHistoryModel.findOne({ docId }).sort({ createdAt: -1 }).select('-updatedAt -_id');
+  return await docHistoryModel
+    .find({ docId })
+    .sort({ createdAt: -1 })
+    .populate('author', 'first_name last_name')
+    .select('-updatedAt -_id');
 }

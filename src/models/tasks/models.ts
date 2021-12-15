@@ -22,17 +22,15 @@ const taskSchema = new Schema({
   },
   tags: [
     {
-      type: String,
-      require: true,
-    },
-  ],
-  members: [
-    {
       type: Schema.Types.ObjectId,
-      ref: 'Accounts',
-      require: true,
+      ref: 'tagTasks',
     },
   ],
+  assignee: {
+    type: Schema.Types.ObjectId,
+    ref: 'Accounts',
+    require: true,
+  },
   deadline: Date,
   status: {
     type: Schema.Types.ObjectId,
