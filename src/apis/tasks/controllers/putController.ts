@@ -20,7 +20,7 @@ export async function editTaskControl(
       title: Joi.string(),
       description: Joi.string(),
       tags: Joi.array().items(Joi.string()),
-      members: Joi.array().items(Joi.string()),
+      assignee: Joi.string().required(),
       deadline: Joi.string(),
       status: Joi.string(),
     });

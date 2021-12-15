@@ -2,7 +2,9 @@ import HttpException from '../../../common/helpers/HttpException';
 import IInfoProject from '../../../models/project/information/interface';
 import userSchema from '../../../models/user/account/model';
 import projectModel from '../../../models/project/information/model';
-import { ICreateProjectReq } from '../interface';
+import { ICreateProjectReq, ICreateStatusTaskReq } from '../interface';
+import { tagTaskModel, taskStatusModel } from '../../../models/project/extensions/model';
+
 export async function createProjectService(
   request: ICreateProjectReq,
   userId: string
@@ -29,4 +31,26 @@ export async function createProjectService(
   } as IInfoProject);
   const project = await newProject.save();
   return project;
+}
+
+export async function createTagTaskService(projectId: string, title: string) {
+  const tag = await tagTaskModel.create({ projectId, title });
+  return tag;
+}
+
+
+export async function createStatusTaskService({
+  statusData,
+  projectId,
+}: ICreateStatusTaskReq) {
+  const project = await projectModel.findById(projectId);
+  if (!project) {
+    throw new HttpException(400, 'projectId is not exist');
+  }
+  const newStatus = await taskStatusModel.create({
+    ...statusData,
+    projectId,
+  })
+  
+  return newStatus;
 }

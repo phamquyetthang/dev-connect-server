@@ -1,4 +1,3 @@
-import { ITaskStatus } from '../../models/project/extensions/interface';
 import { ITask } from '../../models/tasks/interface';
 
 export type ICreateTaskReq = {
@@ -6,17 +5,13 @@ export type ICreateTaskReq = {
   unitId: string;
 };
 
-export type ICreateStatusTaskReq = {
-  statusData: Omit<ITaskStatus, '_id' | 'projectId'>;
-  projectId: string;
-};
 
 export type IEditTaskReq = {
   id: string;
   title?: string;
   description?: string;
   tags?: string[];
-  members?: string[];
+  assignee?: string;
   deadline?: Date;
   status?: string;
 };

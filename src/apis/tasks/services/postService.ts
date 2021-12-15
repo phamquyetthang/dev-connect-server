@@ -1,9 +1,7 @@
 import HttpException from '../../../common/helpers/HttpException';
 import docModel from '../../../models/doc/model';
-import { ICreateStatusTaskReq, ICreateTaskReq } from '../interface';
+import { ICreateTaskReq } from '../interface';
 import taskModel from '../../../models/tasks/models';
-import projectModel from '../../../models/project/information/model';
-import { taskStatusModel } from '../../../models/project/extensions/model';
 
 export async function createTaskService({ taskData, unitId }: ICreateTaskReq) {
   const doc = await docModel.findByIdAndUpdate(unitId);
@@ -20,20 +18,4 @@ export async function createTaskService({ taskData, unitId }: ICreateTaskReq) {
     });
 
   return newTask;
-}
-
-export async function createStatusTaskService({
-  statusData,
-  projectId,
-}: ICreateStatusTaskReq) {
-  const project = await projectModel.findById(projectId);
-  if (!project) {
-    throw new HttpException(400, 'projectId is not exist');
-  }
-  const newStatus = await taskStatusModel.create({
-    ...statusData,
-    projectId,
-  })
-  
-  return newStatus;
 }

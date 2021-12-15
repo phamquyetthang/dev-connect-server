@@ -14,8 +14,3 @@ export async function getListTaskService(
   const data = await pagingHelper(task, page);
   return data;
 }
-
-export async function getListStatusTaskService(projectId: string) {
-  const status = await taskStatusModel.find({ projectId });
-  return status;
-}

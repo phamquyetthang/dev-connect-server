@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import {
   getDocHistoryService,
+  getListDocNameService,
   getListDocService,
 } from '../services/getService';
 
@@ -18,6 +19,20 @@ export async function getListDocController(
       String(searchKey),
       Number(page)
     );
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getListDocNameController(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const projectId = req.query.projectId || '';
+    const response = await getListDocNameService(String(projectId));
     res.status(200).json(response);
   } catch (error) {
     next(error);

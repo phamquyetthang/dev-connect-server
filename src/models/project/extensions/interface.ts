@@ -12,3 +12,8 @@ export interface ITaskTemplate{
     name: string;
     content: string;
 }
+export interface ITagTask{
+    _id: string;
+    projectId: string;
+    title: string;
+}
