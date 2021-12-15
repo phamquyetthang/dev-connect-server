@@ -1,5 +1,4 @@
 import pagingHelper from '../../../common/helpers/pagingHelper';
-import { taskStatusModel } from '../../../models/project/extensions/model';
 import taskModel from '../../../models/tasks/models';
 
 export async function getListTaskService(
