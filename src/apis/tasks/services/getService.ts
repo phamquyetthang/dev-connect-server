@@ -8,7 +8,11 @@ export async function getListTaskService(
   page: number,
   searchKey: string
 ) {
-  const listUnit = await docModel.find({ projectId }).select('units').exec();
+  const listUnit = await docModel
+    .find({ projectId })
+    .select('units')
+    .sort({ updatedAt: -1 })
+    .exec();
   if (!listUnit) {
     throw new HttpException(400, 'project id khong ton tai');
   }
@@ -20,7 +24,14 @@ export async function getListTaskService(
     })
     .populate('status', '_id name color')
     .populate('tags', '_id title')
-    .populate('assignee', '_id first_name last_name');
+    .populate('assignee', '_id first_name last_name')
+    .populate('unitId', '_id title')
+    .sort({ createdAt: -1 });
   const data = await pagingHelper(task, page);
   return data;
+}
+
+export async function getTaskDetailService(taskId: string) {
+  return await taskModel.findById(taskId).select('-createdAt -updatedAt');
+  // .populate('unitId', '_id members');
 }

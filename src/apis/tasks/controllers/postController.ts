@@ -12,7 +12,6 @@ export async function createTaskController(
 ) {
   try {
     const { taskData, unitId }: ICreateTaskReq = req.body;
-    console.log("🚀 ~ file: postController.ts ~ line 15 ~ req.body", req.body)
 
     const reqSchema = Joi.object<Omit<ITask, '_id' | 'unitId'>>({
       title: Joi.string().required(),

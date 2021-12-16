@@ -5,6 +5,7 @@ import { IEditTaskReq, IEditTaskStatusReq } from '../interface';
 import {
   deleteStatusTaskService,
   deleteTaskService,
+  editStatusTaskService,
   editTaskService,
 } from '../services/putService';
 
@@ -17,12 +18,13 @@ export async function editTaskControl(
     const request: IEditTaskReq = req.body;
     const reqSchema = Joi.object<IEditTaskReq>({
       id: Joi.string().required(),
-      title: Joi.string(),
-      description: Joi.string(),
+      title: Joi.string().required(),
+      description: Joi.string().required(),
       tags: Joi.array().items(Joi.string()),
       assignee: Joi.string().required(),
-      deadline: Joi.string(),
-      status: Joi.string(),
+      deadline: Joi.string().required(),
+      status: Joi.string().required(),
+      unitId: Joi.string().required(),
     });
     const data: IEditTaskReq = await validateRequest(reqSchema, request);
     const response = await editTaskService(data);
@@ -48,7 +50,7 @@ export async function editTaskStatusControl(
     });
 
     const data: IEditTaskStatusReq = await validateRequest(reqSchema, request);
-    const response = await editTaskService(data);
+    const response = await editStatusTaskService(data);
     res.status(200).json(response);
   } catch (error) {
     next(error);

@@ -36,7 +36,7 @@ const taskSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'TaskStatus',
   },
-});
+}, {timestamps: true});
 
 const taskModel = model<ITask & Document>('Tasks', taskSchema);
 

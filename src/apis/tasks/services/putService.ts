@@ -3,8 +3,9 @@ import taskModel from '../../../models/tasks/models';
 import { IEditTaskReq, IEditTaskStatusReq } from '../interface';
 
 export async function editTaskService(data: IEditTaskReq) {
-  const task = await taskModel.findByIdAndUpdate(data.id, {
-    ...data,
+  const {id, ...updateData} = data;
+  const task = await taskModel.findByIdAndUpdate(id, {
+    ...updateData,
   });
   return task;
 }

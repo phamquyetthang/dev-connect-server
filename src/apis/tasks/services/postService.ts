@@ -13,10 +13,5 @@ export async function createTaskService({ taskData, unitId }: ICreateTaskReq) {
       ...taskData,
       unitId,
     })
-    .then((res) => {
-      doc.updateOne({ $push: { tasks: res._id } });
-    })
-    .catch((err) => console.log(err));
-
   return newTask;
 }
