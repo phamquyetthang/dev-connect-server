@@ -15,6 +15,7 @@ export async function editTaskControl(
   next: NextFunction
 ) {
   try {
+    const userId = req.user.id;
     const request: IEditTaskReq = req.body;
     const reqSchema = Joi.object<IEditTaskReq>({
       id: Joi.string().required(),
@@ -27,7 +28,7 @@ export async function editTaskControl(
       unitId: Joi.string().required(),
     });
     const data: IEditTaskReq = await validateRequest(reqSchema, request);
-    const response = await editTaskService(data);
+    const response = await editTaskService(userId, data);
     res.status(200).json(response);
   } catch (error) {
     next(error);
@@ -41,7 +42,7 @@ export async function editTaskStatusControl(
 ) {
   try {
     const request: IEditTaskStatusReq = req.body;
-    
+
     const reqSchema = Joi.object<IEditTaskStatusReq>({
       id: Joi.string().required(),
       name: Joi.string(),

@@ -1,10 +1,12 @@
-import mongoose, {
-  Document,
-  Model,
-} from 'mongoose';
-import eventLogMiddleware from '../../common/middleware/eventLog';
+import mongoose, { Document, Model } from 'mongoose';
+import docEventLogMiddleware from '../../common/middleware/eventLogDoc';
 import { updateDocByUser } from '../../common/static';
-import IDoc, { IDocEdit, IDocHistory, IDocSchema, InstanceMethods } from './interface';
+import IDoc, {
+  IDocEdit,
+  IDocHistory,
+  IDocSchema,
+  InstanceMethods,
+} from './interface';
 
 const { Schema } = mongoose;
 
@@ -120,7 +122,7 @@ const docSchema = new Schema<
 });
 docSchema.index({ '$**': 'text' });
 
-docSchema.plugin(eventLogMiddleware);
+docSchema.plugin(docEventLogMiddleware);
 docSchema.statics.updateDocByUser = updateDocByUser;
 interface IUserDocument extends IDocSchema, Document {
   eventLog: (data: any) => void;

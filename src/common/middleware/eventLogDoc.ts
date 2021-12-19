@@ -1,8 +1,8 @@
-import { IDocEdit } from './../../models/doc/interface';
+import { IDocEdit } from '../../models/doc/interface';
 import { Schema } from 'mongoose';
 import { docHistoryModel } from '../../models/doc/model';
 
-export default function eventLogMiddleware(schema: Schema<any>) {
+export default function docEventLogMiddleware(schema: Schema<any>) {
   const diff: any = {
     from: null,
     to: null,
