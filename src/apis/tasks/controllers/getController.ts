@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { getListTaskService } from '../services/getService';
+import { getListTaskService, getTaskDetailService } from '../services/getService';
 
 export async function getListTasksControl(
   req: Request,
@@ -15,6 +15,20 @@ export async function getListTasksControl(
       Number(page),
       String(searchKey),
     );
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getTaskDetailControl(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const taskId = req.params.id;
+    const response = await getTaskDetailService(taskId);
     res.status(200).json(response);
   } catch (error) {
     next(error);

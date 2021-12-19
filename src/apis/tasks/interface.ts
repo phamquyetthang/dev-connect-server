@@ -8,12 +8,13 @@ export type ICreateTaskReq = {
 
 export type IEditTaskReq = {
   id: string;
-  title?: string;
-  description?: string;
-  tags?: string[];
-  assignee?: string;
-  deadline?: Date;
-  status?: string;
+  title: string;
+  description: string;
+  tags: string[];
+  assignee: string;
+  deadline: Date;
+  status: string;
+  unitId: string;
 };
 
 export type IEditTaskStatusReq = {
