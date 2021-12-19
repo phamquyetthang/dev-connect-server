@@ -73,6 +73,7 @@ const taskSchema = new Schema(
 
 // console.log(typeof docEventLogMiddleware)
 taskSchema.plugin(taskEventLogMiddleware);
+
 async function updateTaskByUser(
   userId: string,
   taskId: string,

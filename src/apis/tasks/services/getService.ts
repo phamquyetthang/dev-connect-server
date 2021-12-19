@@ -1,7 +1,7 @@
 import HttpException from '../../../common/helpers/HttpException';
 import pagingHelper from '../../../common/helpers/pagingHelper';
 import docModel from '../../../models/doc/model';
-import taskModel from '../../../models/tasks/models';
+import taskModel, { taskHistoryModel } from '../../../models/tasks/models';
 
 export async function getListTaskService(
   projectId: string,
@@ -34,4 +34,12 @@ export async function getListTaskService(
 export async function getTaskDetailService(taskId: string) {
   return await taskModel.findById(taskId).select('-createdAt -updatedAt');
   // .populate('unitId', '_id members');
+}
+
+export async function getTaskHistoryService(taskId: string) {
+  return await taskHistoryModel
+    .find({ taskId })
+    .sort({ createdAt: -1 })
+    .populate('author', 'first_name last_name')
+    .select('-updatedAt -_id');
 }

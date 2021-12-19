@@ -10,7 +10,6 @@ export default function taskEventLogMiddleware(schema: Schema<any>) {
   let taskId = '';
   schema.pre('findOneAndUpdate', async function () {
     const updateObj = (this as any)?._update;
-    console.log('🚀 ~ file: eventLogTask.ts ~ line 13 ~ updateObj', updateObj);
     const docToUpdate = await this.model.findOne(this.getQuery());
 
     const currentObj: ITaskUpdate = {};
@@ -42,11 +41,6 @@ export default function taskEventLogMiddleware(schema: Schema<any>) {
   });
 
   schema.methods.eventLog = function async(userId: string) {
-    console.log(
-      '🚀 ~ file: eventLogTask.ts ~ line 27 ~ async ~ userId',
-      userId
-    );
-    console.log('🚀 ~ file: eventLogTask.ts ~ line 27 ~ async ~ diff', diff);
     return taskHistoryModel.create({
       author: userId,
       taskId: taskId,

@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { getListTaskService, getTaskDetailService } from '../services/getService';
+import {
+  getListTaskService,
+  getTaskDetailService,
+  getTaskHistoryService,
+} from '../services/getService';
 
 export async function getListTasksControl(
   req: Request,
@@ -13,7 +17,7 @@ export async function getListTasksControl(
     const response = await getListTaskService(
       projectId.toString(),
       Number(page),
-      String(searchKey),
+      String(searchKey)
     );
     res.status(200).json(response);
   } catch (error) {
@@ -35,3 +39,16 @@ export async function getTaskDetailControl(
   }
 }
 
+export async function getTaskHistoryControl(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const taskId = req.params.id;
+    const response = await getTaskHistoryService(taskId);
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+}
