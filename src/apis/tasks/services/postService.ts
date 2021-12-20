@@ -8,10 +8,11 @@ export async function createTaskService({ taskData, unitId }: ICreateTaskReq) {
   if (!doc) {
     throw new HttpException(400, 'unitId is not exist');
   }
-  const newTask = await taskModel
-    .create({
-      ...taskData,
-      unitId,
-    })
+  const newTask = await taskModel.create({
+    ...taskData,
+    unitId,
+  });
+
+  await docModel.findByIdAndUpdate(unitId, { $push: { tasks: newTask._id } });
   return newTask;
 }

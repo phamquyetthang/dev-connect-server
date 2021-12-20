@@ -49,77 +49,78 @@ const docSchema = new Schema<
   Model<IDoc, {}, InstanceMethods>,
   undefined,
   InstanceMethods
->({
-  projectId: {
-    type: Schema.Types.ObjectId,
-    require: true,
-    ref: 'Projects',
-  },
-  title: {
-    type: String,
-    require: true,
-  },
-  method: {
-    type: String,
-    require: true,
-    enum: [
-      'GET',
-      'HEAD',
-      'POST',
-      'PUT',
-      'PATCH',
-      'DELETE',
-      'CONNECT',
-      'OPTIONS',
-      'TRACE',
-    ],
-  },
-  host: String,
-  endpoint: {
-    type: String,
-    require: true,
-  },
-  requestType: {
-    type: String,
-    require: true,
-  },
-  requestBody: Object,
-  responseType: {
-    type: String,
-    require: true,
-  },
-  responseBody: Object,
-  status: [
-    {
+>(
+  {
+    projectId: {
       type: Schema.Types.ObjectId,
-      ref: 'DocStatus',
+      require: true,
+      ref: 'Projects',
     },
-  ],
-  description: {
-    type: String,
-    require: true,
-  },
-  members: [
-    {
-      _id: false,
-      id_member: {
+    title: {
+      type: String,
+      require: true,
+    },
+    method: {
+      type: String,
+      require: true,
+      enum: [
+        'GET',
+        'HEAD',
+        'POST',
+        'PUT',
+        'PATCH',
+        'DELETE',
+        'CONNECT',
+        'OPTIONS',
+        'TRACE',
+      ],
+    },
+    host: String,
+    endpoint: {
+      type: String,
+      require: true,
+    },
+    requestType: {
+      type: String,
+      require: true,
+    },
+    requestBody: Object,
+    responseType: {
+      type: String,
+      require: true,
+    },
+    responseBody: Object,
+    status: [
+      {
         type: Schema.Types.ObjectId,
-        ref: 'Accounts',
+        ref: 'DocStatus',
       },
-      name: {
-        type: String,
-        require: true,
-      },
+    ],
+    description: {
+      type: String,
+      require: true,
     },
-  ],
-  extension: {
-    type: String,
+    members: [
+      {
+        _id: false,
+        id_member: {
+          type: Schema.Types.ObjectId,
+          ref: 'Accounts',
+        },
+        name: {
+          type: String,
+          require: true,
+        },
+      },
+    ],
+    tasks: {
+      type: Schema.Types.ObjectId,
+      ref: 'Tasks',
+    },
   },
-  tasks: {
-    type: Schema.Types.ObjectId,
-    ref: 'Tasks',
-  },
-});
+  { timestamps: { createdAt: true, updatedAt: false }, versionKey: false }
+);
+
 docSchema.index({ '$**': 'text' });
 
 docSchema.plugin(docEventLogMiddleware);

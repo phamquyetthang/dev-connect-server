@@ -10,9 +10,18 @@ export async function getListDocService(
       projectId,
       ...(!!searchKey && { $text: { $search: searchKey } }),
     })
-    .select('-projectId -requestBody -requestType -responseBody -responseType');
+    .select('-projectId -requestBody -requestType -responseBody -responseType')
+    .sort({ createdAt: -1 });
   const data = await pagingHelper(docs, page);
   return data;
+}
+
+export async function getDocDetailService(docId: string) {
+  const doc = await docModel
+    .findById(docId)
+    .select('-_id -projectId -members -tasks -createdAt')
+    .exec();
+  return doc;
 }
 
 export async function getListDocNameService(projectId: string) {

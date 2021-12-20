@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import authMiddleware from '../../common/middleware/authentication';
 import {
+  getDocDetailController,
   getDocHistoryControl,
   getListDocController,
   getListDocNameController,
@@ -13,6 +14,7 @@ const docPath = '/doc';
 
 docRouter
   .get(docPath, authMiddleware, getListDocController)
+  .get(docPath + '/:id', authMiddleware, getDocDetailController)
   .get(docPath +'/select', authMiddleware, getListDocNameController)
   .get(docPath + '/history/:docId', authMiddleware, getDocHistoryControl)
   .post(docPath, authMiddleware, createDocController)

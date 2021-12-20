@@ -2,6 +2,7 @@ import { isEmpty, isEqual } from 'lodash';
 import moment from 'moment';
 import { Document, Model, model, Schema } from 'mongoose';
 import taskEventLogMiddleware from '../../common/middleware/eventLogTask';
+import docModel from '../doc/model';
 // import { updateTaskByUser } from '../../common/static';
 import {
   ITask,
@@ -103,6 +104,16 @@ async function updateTaskByUser(
 
   const task = await taskModel.findByIdAndUpdate(taskId, update, { new: true });
   task?.eventLog(userId);
+
+  if (update.unitId) {
+    await docModel.findByIdAndUpdate(currentTask.unitId, {
+      $pull: { tasks: taskId },
+    });
+    await docModel.findByIdAndUpdate(update.unitId, {
+      $push: { tasks: taskId },
+    });
+  }
+
   return task;
 }
 taskSchema.statics.updateTaskByUser = updateTaskByUser;

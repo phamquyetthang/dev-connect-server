@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import {
+  getDocDetailService,
   getDocHistoryService,
   getListDocNameService,
   getListDocService,
@@ -19,6 +20,20 @@ export async function getListDocController(
       String(searchKey),
       Number(page)
     );
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getDocDetailController(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const docId = req.params.id;
+    const response = await getDocDetailService(docId);
     res.status(200).json(response);
   } catch (error) {
     next(error);

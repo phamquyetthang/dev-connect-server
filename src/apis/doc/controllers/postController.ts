@@ -28,8 +28,6 @@ export async function createDocController(
         id_member: Joi.string().required(),
         name: Joi.string().required(),
       }),
-      extension: Joi.array().items(Joi.string()),
-      tasks: Joi.array().items(Joi.string()),
     });
 
     const data: Omit<IDoc, '_id'> = await validateRequest(reqSchema, docData);
