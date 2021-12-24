@@ -16,7 +16,7 @@ export async function createChatroomControl(
     const request: ICreateChatroomReq = req.body;
     const reqSchema = Joi.object<ICreateChatroomReq>({
       projectId: Joi.string().required(),
-      member: Joi.string(),
+      member: Joi.array().items(Joi.string()),
       all: Joi.boolean(),
       name: Joi.string(),
     });

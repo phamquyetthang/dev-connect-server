@@ -129,6 +129,7 @@ export async function editSnippetControl(
     const reqSchema = Joi.object<IEditSnippetReq>({
       userId: Joi.string().required(),
       snippetId: Joi.string().required(),
+      snippet: Joi.string().required(),
     });
     const data: IEditSnippetReq = await validateRequest(reqSchema, request);
     const result = await editSnippetService(data);

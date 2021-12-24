@@ -18,7 +18,7 @@ export interface IAllChatQuery {
 
 export interface ICreateChatroomReq {
   projectId: string;
-  member?: string;
+  member: string[];
   all?: boolean;
   name?: string;
 } 
