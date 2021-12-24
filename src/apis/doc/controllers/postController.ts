@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 import { validateRequest } from '../../../common/helpers/validate';
 import IDoc from '../../../models/doc/interface';
-import { createDocService } from '../services/postService';
+import { addMemberDocService, createDocService } from '../services/postService';
 
 export async function createDocController(
   req: Request,
@@ -34,6 +34,20 @@ export async function createDocController(
 
     const response = await createDocService(data, projectId);
     res.status(201).json(response);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function addMemberDocControl(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { docId, userId } = req.body;
+    const response = await addMemberDocService(docId, userId);
+    res.status(200).json(response);
   } catch (error) {
     next(error);
   }

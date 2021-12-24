@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 import { validateRequest } from '../../../common/helpers/validate';
 import { IDocSchema } from '../../../models/doc/interface';
-import { editDocService } from '../services/putService';
+import { deleteMemberDocService, editDocService } from '../services/putService';
 export async function editDocController(
   req: Request,
   res: Response,
@@ -27,6 +27,20 @@ export async function editDocController(
       await validateRequest(reqSchema, data);
       
     const response = await editDocService({ userId, docId, data: dataValid });
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function deleteMemberDocControl(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { docId, userId } = req.body;
+    const response = await deleteMemberDocService(docId, userId);
     res.status(200).json(response);
   } catch (error) {
     next(error);
