@@ -45,8 +45,8 @@ export async function addMemberDocControl(
   next: NextFunction
 ) {
   try {
-    const { docId, userId } = req.body;
-    const response = await addMemberDocService(docId, userId);
+    const { docId, listUserId } = req.body;
+    const response = await addMemberDocService(docId, listUserId);
     res.status(200).json(response);
   } catch (error) {
     next(error);

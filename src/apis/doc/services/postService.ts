@@ -34,21 +34,21 @@ export async function createDocService(
   return project;
 }
 
-export async function addMemberDocService(docId: string, userId: string) {
-  const user = await userModel.findById(userId);
-  if (!user) {
+export async function addMemberDocService(docId: string, listUserId: string[]) {
+  const users = await userModel.find({ _id: { $in: listUserId } });
+  if (!users) {
     throw new HttpException(400, 'user id không tồn tại');
   }
 
+  const members = users.map((user) => ({
+    id_member: user._id,
+    name: `${user.first_name} ${user.last_name}`,
+  }));
+  
   const doc = await docModel.findByIdAndUpdate(
     docId,
     {
-      $push: {
-        members: {
-          id_member: user._id,
-          name: `${user.first_name} ${user.last_name}`,
-        },
-      },
+      members,
     },
     { new: true }
   );
