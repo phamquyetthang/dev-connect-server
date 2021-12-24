@@ -1,4 +1,3 @@
-
 import conversationModel from '../../../models/conversation/model';
 import docModel from '../../../models/doc/model';
 import { ICreateChatroomReq, ISendMessageUserReq } from '../interface';
@@ -13,16 +12,20 @@ export async function createChatroomService(
       name: groupName,
       projectId: request.projectId,
       admin: [userId],
-      members: [userId],
+      members: [],
     });
     await newConversation.save();
     return newConversation;
   } else {
+    const members = request.member?.includes(userId)
+      ? request.member
+      : [userId, ...request.member];
+      
     const newConversation = new conversationModel({
       name: groupName,
       projectId: request.projectId,
       admin: [userId],
-      members: request.member,
+      members: members,
       isSingle: request.member?.length === 2,
     });
     await newConversation.save();
@@ -57,6 +60,10 @@ export async function createChatDocService(userId: string, docId: string) {
     .select('title members projectId')
     .exec();
   const members = doc?.members.map((i) => i.id_member) || [];
+  console.log(
+    '🚀 ~ file: postService.ts ~ line 60 ~ createChatDocService ~ members',
+    members
+  );
   const newConversation = new conversationModel({
     name: doc?.title,
     projectId: doc?.projectId,

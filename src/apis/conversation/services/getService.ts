@@ -16,8 +16,8 @@ export async function getMyChatsService(userId: string, projectId: string) {
         { projectId: projectId },
         {
           $or: [
-            { members: { $exists: true, $ne: [] } },
-            { members: { $elemMatch: { member_id: userId } } },
+            { members:{ $exists:true, $size:0} },
+            { members: { $elemMatch: { $eq: userId } } },
           ],
         },
       ],
@@ -59,6 +59,7 @@ export async function getChatFromDocService(
       .select('_id title members projectId')
       .exec();
     const members = doc?.members.map((i) => i.id_member) || [];
+    console.log("🚀 ~ file: getService.ts ~ line 62 ~ members", members)
     const newConversation = new conversationModel({
       name: doc?.title,
       projectId: doc?.projectId,

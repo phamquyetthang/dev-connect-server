@@ -5,6 +5,7 @@ import {
   getPreferencesControl,
   getUserProfileControl,
 } from './controllers/getControllers';
+import { addSnippetController } from './controllers/postControllers';
 import {
   changeLanguageControl,
   changePasswordControl,
@@ -19,6 +20,7 @@ const usePath = '/user';
 
 userRouter
   .post(usePath + '/register', registerController)
+  .post(usePath + '/snippet', addSnippetController)
 
   .get(usePath + '/info', authMiddleware, getInfoController)
   .get(usePath + '/profile', authMiddleware, getUserProfileControl)

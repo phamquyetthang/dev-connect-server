@@ -54,12 +54,10 @@ export interface IDocEdit {
     id_member?: string;
     name?: string;
   }>;
-  extension?: string[];
   tasks?: string[];
 }
 
 export interface IDocSchema {
-  // _id: string;
   projectId: string;
   title: string;
   method: METHOD_API;
@@ -75,7 +73,6 @@ export interface IDocSchema {
     id_member: string;
     name: string;
   }>;
-  extension: string[];
   tasks: string[];
 }
 

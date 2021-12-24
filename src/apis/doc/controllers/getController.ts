@@ -1,8 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import {
+  getDocDetailService,
   getDocHistoryService,
+  getDocMemberService,
   getListDocNameService,
   getListDocService,
+  getListTaskInDocService,
 } from '../services/getService';
 
 export async function getListDocController(
@@ -19,6 +22,34 @@ export async function getListDocController(
       String(searchKey),
       Number(page)
     );
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getDocDetailController(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const docId = req.params.id;
+    const response = await getDocDetailService(docId);
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getDocMemberController(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const docId = req.params.id;
+    const response = await getDocMemberService(docId);
     res.status(200).json(response);
   } catch (error) {
     next(error);
@@ -51,5 +82,18 @@ export async function getDocHistoryControl(
   } catch (error) {
     next(error);
   }
-  // getDocHistory
+}
+
+export async function getListTaskInDocControl(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const docId = req.params.docId;
+    const response = await getListTaskInDocService(docId);
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
 }

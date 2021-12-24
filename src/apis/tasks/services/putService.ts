@@ -4,7 +4,6 @@ import { IEditTaskReq, IEditTaskStatusReq } from '../interface';
 
 export async function editTaskService(userId: string, data: IEditTaskReq) {
   const { id, ...updateData } = data;
-  console.log("🚀 ~ file: putService.ts ~ line 7 ~ editTaskService ~ updateData", updateData)
   const task = await taskModel.updateTaskByUser(userId, id, {
     ...updateData,
   });

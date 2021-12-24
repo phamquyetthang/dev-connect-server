@@ -92,6 +92,7 @@ export async function changeLanguageService(userId: string, language: string) {
 export async function editSnippetService({
   userId,
   snippetId,
+  snippet,
 }: IEditSnippetReq) {
   try {
     const preference = await userPreferencesModel.findOne(
@@ -107,6 +108,7 @@ export async function editSnippetService({
       },
       { new: true }
     );
+    console.log("🚀 ~ file: putServices.ts ~ line 111 ~ preference", preference)
     return preference;
   } catch (error) {
     throw error;

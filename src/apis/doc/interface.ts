@@ -4,7 +4,7 @@ export type ICreateDocReq = IDoc & {
   projectId: string;
 };
 export interface IEditDocReq {
-  userId: string,
-  docId: string,
-  data: IDocSchema,
+  userId: string;
+  docId: string;
+  data: Omit<IDocSchema, 'projectId' | 'members'>;
 }

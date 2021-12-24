@@ -1,3 +1,4 @@
+import { ISnippet } from "../../models/user/preferences/interface";
 import { IExperience, ISocial } from "../../models/user/profile/interface";
 
 export interface IEditUserBasicReq {
@@ -25,10 +26,10 @@ export interface IEditPreferenceReq {
 }
 export interface IAddSnippetReq {
   userId: string;
-  snippet: string;
+  snippet: Omit<ISnippet, '_id' >;
 }
 export interface IEditSnippetReq {
   userId: string;
   snippetId: string;
-  snippet: string;
+  snippet:  Omit<ISnippet, '_id' >;
 }
